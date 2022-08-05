@@ -36,7 +36,7 @@ stages{
    stage('Delpoy nodejs application') { 
             steps {
               
-              sh 'docker run -d -p 3001:3000 --name ${containername} node-sample:${imageversion} '
+              sh 'docker run -d -p 3001:3000 --name ${containername} one2onetool:${imageversion} '
     }
 }
     
