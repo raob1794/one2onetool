@@ -7,10 +7,7 @@ pipeline {
             choices: ['Yes' , 'No'],
             description: 'IF you want to Delete existing containers ? ',
             name: 'REQUESTED_ACTION')
-    
-    
-    }
-
+         }
 stages{
         stage ('DOcker build image using Dockerfile'){
          steps {
@@ -18,44 +15,28 @@ stages{
 }
         }
     
-        stage('Docker Images') { 
+stage('Test ') { 
             steps {
-                sh 'docker images'
-            }
-        }
-    stage('list of exisitng continaer ') { 
-            steps {
-              sh 'docker ps -a'
+                sh 'npm test'
+                    echo 'testing application'
+           
     }
 }
      stage('Docker Remove containers') { 
-           when {
+          when {
                 // Only say hello if a "greeting" is requested
                 expression { params.REQUESTED_ACTION == 'Yes' }
-            }
-            steps {
+          }
+           steps {
                 sh 'docker rm -f $(docker ps -aq)'
             }
         }
-      stage('docker Containers') { 
+   stage('Delpoy nodejs application') { 
             steps {
-                sh 'docker run -d -p 3000:3000 --name ${containername} one2onetool:${imageversion} '
-            }
-        }
-stage('Delpoy nodejs application') { 
-            steps {
-              sh 'docker ps -a'
+              
+              sh 'docker run -d -p 3001:3000 --name ${containername} node-sample:${imageversion} '
     }
 }
     
-    
 }
-    // post{
-     //   always{
-      //      mail to: "raob6730@gmail.com",
-       //     subject: "Test Email",
-        //    body: "Test"
-        //}
-    //}
-
-}
+    }
