@@ -7,8 +7,7 @@ pipeline {
             choices: ['Yes' , 'No'],
             description: 'IF you want to Delete existing containers ? ',
             name: 'REQUESTED_ACTION')
-    
-    
+       
     }
 
 stages{
