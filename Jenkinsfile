@@ -19,6 +19,7 @@ stages{
     
        stage('Test ') { 
             steps {
+                sh 'npm install'
                 sh 'npm test'
                     echo 'testing application'
            
