@@ -11,7 +11,7 @@ pipeline {
 stages{
         stage ('DOcker build image using Dockerfile'){
          steps {
-            sh 'docker build -t one2onetool:${imageversion} . ' 
+            sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . ' 
 }
         }
     
@@ -34,7 +34,7 @@ stage('Test ') {
    stage('Delpoy nodejs application') { 
             steps {
               
-              sh 'docker run -d -p 3001:3000 --name ${containername} one2onetool:${imageversion} '
+              sh 'docker run -d -p 3001:3000 --name ${containername} one2onetool:${imageversion}-${BUILD_NUMBER} '
     }
 }
     
