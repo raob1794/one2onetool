@@ -14,11 +14,20 @@ pipeline {
         )
        
     }
+   
 
 stages{
         stage ('DOcker build image using Dockerfile'){
          steps { 
              sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . ' 
+             script {
+                 if(deployto == 'test'){
+                     params.env_var = "DATA_FILE=Questions-test.json"
+                 }else{
+                     params.env_var = "DATA_FILE=Questions.json"
+                 }
+                 echo "env selected is : "+params.env_var
+             }
 } 
         }
     
