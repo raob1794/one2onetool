@@ -10,7 +10,7 @@ pipeline {
         choice(
             choices: ['test' , 'prod'],
             description: 'Do you want to deploy to test or prod? ',
-            name: 'REQUESTED_ACTION',
+            name: 'deployto',
             defaultValue: 'test'
         )
        
