@@ -21,7 +21,7 @@ stages{
          steps { 
              sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . ' 
              script {
-                 if(deployto == 'test'){
+                 if(true){
                      params.env_var = "DATA_FILE=Questions-test.json"
                  }else{
                      params.env_var = "DATA_FILE=Questions.json"
