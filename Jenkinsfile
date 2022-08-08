@@ -7,6 +7,12 @@ pipeline {
             choices: ['Yes' , 'No'],
             description: 'IF you want to Delete existing containers ? ',
             name: 'REQUESTED_ACTION')
+        choice(
+            choices: ['test' , 'prod'],
+            description: 'Do you want to deploy to test or prod? ',
+            name: 'REQUESTED_ACTION',
+            defaultValue: 'test'
+        )
        
     }
 
