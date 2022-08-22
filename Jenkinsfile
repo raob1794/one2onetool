@@ -7,15 +7,28 @@ pipeline {
             choices: ['Yes' , 'No'],
             description: 'IF you want to Delete existing containers ? ',
             name: 'REQUESTED_ACTION')
-         }
+        choice(
+            choices: ['test' , 'prod'],
+            description: 'Do you want to deploy to test or prod? ',
+            name: 'deployto'
+        )
+       
+    }
+   
+
 stages{
         stage ('DOcker build image using Dockerfile'){
-         steps {
-            sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . ' 
-}
-        }
-    
-stage('Test ') { 
+            steps {
+                script {
+                    if(params.deployto == "test")
+                        sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"' 
+                    else
+                        sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions.json"' 
+                }
+         //steps {sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"'} 
+            }
+       }
+       stage('Test ') { 
             steps {
                 sh 'npm install'
                 sh 'npm test'
