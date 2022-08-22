@@ -19,7 +19,7 @@ pipeline {
 stages{
         stage ('DOcker build image using Dockerfile'){
             steps {
-                scripts {
+                script {
                     if(params.deployto == "test")
                         sh 'docker build -t one2onetool:${imageversion} . --build-arg DATA_FILE="Questions-test.json"' 
                     else
