@@ -27,7 +27,7 @@ stages{
                 }
          //steps {sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"'} 
             }
-    
+       }
        stage('Test ') { 
             steps {
                 sh 'npm install'
