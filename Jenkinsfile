@@ -18,10 +18,13 @@ pipeline {
 
 stages{
         stage ('DOcker build image using Dockerfile'){
-         steps { 
-             
-             sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"'
-} 
+            steps {
+            if(${env.deployto} == "test")
+                sh 'docker build -t one2onetool:${imageversion} . --build-arg DATA_FILE="Questions-test.json"' 
+            else
+                sh 'docker build -t one2onetool:${imageversion} . --build-arg DATA_FILE="Questions.json"' 
+         }
+         //steps {sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"'} 
         }
     
        stage('Test ') { 
