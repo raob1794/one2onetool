@@ -53,4 +53,11 @@ stages{
 }
     
 }
+    post{
+        always{
+            mail to: "raob6730@gmail.com",
+            subject: "Test Email",
+            body: "Test"
+        }
+    }
     }
