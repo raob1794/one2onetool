@@ -54,10 +54,10 @@ stages{
     
 }
     post{
-        always{
+        failure{
             mail to: "raob6730@gmail.com",
-            subject: "Test Email",
-            body: "Test"
+            subject: "failure Email",
+            body: "failure"
         }
     }
     }
