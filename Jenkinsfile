@@ -57,7 +57,8 @@ stages{
         failure{
             mail to: "raob6730@gmail.com",
             subject: "failure Email",
-            body: "failure"
+            body: "build failure ${JOB_NAME}-Build ${BUILD_NUMBER} - ${BUILD_URL}"
+            
         }
     }
     }
