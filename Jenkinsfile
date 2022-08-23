@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent any 
     parameters { 
          string(defaultValue: "1.0.0.0", description: 'Image version ', name: 'imageversion')
                string(defaultValue: "containername", description: 'Container Name ', name: 'containername')
