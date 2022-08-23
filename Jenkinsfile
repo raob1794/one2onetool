@@ -1,9 +1,9 @@
 pipeline {   
     agent any
-    parameters { 
+    parameters {
          string(defaultValue: "1.0.0.0", description: 'Image version ', name: 'imageversion')
                string(defaultValue: "containername", description: 'Container Name ', name: 'containername')
-          choice(
+          choice( 
             choices: ['Yes' , 'No'],
             description: 'IF you want to Delete existing containers ? ',
             name: 'REQUESTED_ACTION')
