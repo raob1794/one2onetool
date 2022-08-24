@@ -1,18 +1,9 @@
-pipeline { 
-    agent any 
-    parameters { 
+pipeline {
+    agent any
+    parameters {
          string(defaultValue: "1.0.0.0", description: 'Image version ', name: 'imageversion')
-               string(defaultValue: "containername", description: 'Container Name ', name: 'containername')
-          choice(
-            choices: ['Yes' , 'No'],
-            description: 'IF you want to Delete existing containers ? ',
-            name: 'REQUESTED_ACTION')
-        choice(
-            choices: ['test' , 'prod'],
-            description: 'Do you want to deploy to test or prod? ',
-            name: 'deployto'
-        )
-       
+         string(defaultValue: "containername", description: 'Container Name ', name: 'containername')
+          
     }
    
 
@@ -20,12 +11,11 @@ stages{
         stage ('DOcker build image using Dockerfile'){
             steps {
                 script {
-                    if(params.deployto == "test")
-                        sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"' 
-                    else
+                    if(env.GIT_BRANCH == "release")
                         sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions.json"' 
-                }
-         //steps {sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"'} 
+                    else
+                        sh 'docker build -t one2onetool:${imageversion}-${BUILD_NUMBER} . --build-arg DATA_FILE="Questions-test.json"' 
+                } 
             }
        }
        stage('Test ') { 
@@ -36,21 +26,25 @@ stages{
            
     }
 }
-     stage('Docker Remove containers') { 
-          when {
-                // Only say hello if a "greeting" is requested
-                expression { params.REQUESTED_ACTION == 'Yes' }
-          }
-           steps {
-                sh 'docker rm -f $(docker ps -aq)'
-            }
-        }
-   stage('Delpoy nodejs application') { 
+     
+   stage('Deploy nodejs application') { 
             steps {
-              
+                script{
+                    DOCKER_CONTAINER = sh(script: 'docker ps -aq',returnStdout:true)
+                    if(DOCKER_CONTAINER !='')
+                        sh 'docker rm -f $(docker ps -aq)'
+                }
               sh 'docker run -d -p 3001:3000 --name ${containername} one2onetool:${imageversion}-${BUILD_NUMBER} '
     }
 }
-    
+   
 }
+    post{
+        failure{
+            mail to: "raob6730@gmail.com",
+            subject: "failure Email",
+            body: "build failure ${JOB_NAME}-Build ${BUILD_NUMBER} - ${BUILD_URL}"
+            
     }
+   } 
+  }
