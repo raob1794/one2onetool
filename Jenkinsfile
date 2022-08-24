@@ -35,7 +35,8 @@ stages{
    stage('Deploy nodejs application') { 
             steps {
                 script{
-                    if($(docker ps -aq) !='')
+                    DOCKER_CONTAINER = sh(script: 'docker ps -aq',returnStdout:true)
+                    if(DOCKER_CONTAINER !='')
                         sh 'docker rm -f $(docker ps -aq)'
                 }
               sh 'docker run -d -p 3001:3000 --name ${containername} one2onetool:${imageversion}-${BUILD_NUMBER} '
