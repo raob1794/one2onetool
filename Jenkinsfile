@@ -45,7 +45,7 @@ stages{
                 sh 'docker rm -f $(docker ps -aq)'
             }
         }
-   stage('Delpoy nodejs application') { 
+   stage('Deploy nodejs application') { 
             steps {
               
               sh 'docker run -d -p 3001:3000 --name ${containername} one2onetool:${imageversion}-${BUILD_NUMBER} '
