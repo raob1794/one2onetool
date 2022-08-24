@@ -1,9 +1,9 @@
-pipeline {   
+pipeline {
     agent any
     parameters {
          string(defaultValue: "1.0.0.0", description: 'Image version ', name: 'imageversion')
                string(defaultValue: "containername", description: 'Container Name ', name: 'containername')
-          choice( 
+          choice(
             choices: ['Yes' , 'No'],
             description: 'IF you want to Delete existing containers ? ',
             name: 'REQUESTED_ACTION')
@@ -51,7 +51,7 @@ stages{
               sh 'docker run -d -p 3001:3000 --name ${containername} one2onetool:${imageversion}-${BUILD_NUMBER} '
     }
 }
-    
+   
 }
     post{
         failure{
@@ -59,6 +59,6 @@ stages{
             subject: "failure Email",
             body: "build failure ${JOB_NAME}-Build ${BUILD_NUMBER} - ${BUILD_URL}"
             
-       }
     }
-     }
+   }
+  }
