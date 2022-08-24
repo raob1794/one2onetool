@@ -59,6 +59,6 @@ stages{
             subject: "failure Email",
             body: "build failure ${JOB_NAME}-Build ${BUILD_NUMBER} - ${BUILD_URL}"
             
-        }
+       }
     }
-    }
+     }
